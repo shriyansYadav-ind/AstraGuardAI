@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstraGuard AI - Live Hazard Intelligence</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React & ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  
+  <!-- Babel for rendering JSX in browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-[#0B0F19] text-slate-100 font-sans selection:bg-[#00F2FE] selection:text-black">
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function AstraGuardApp() {
+      const [activeTab, setActiveTab] = useState('citizen');
+      const [isModalOpen, setIsModalOpen] = useState(false);
+      const [analyzing, setAnalyzing] = useState(false);
+      const [analysisResult, setAnalysisResult] = useState(null);
+
+      // Render Lucide Icons after DOM updates
+      useEffect(() => {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      }, [activeTab, isModalOpen, analyzing, analysisResult]);
+
+      const handleSimulateAI = () => {
+        setAnalyzing(true);
+        setAnalysisResult(null);
+        setTimeout(() => {
+          setAnalyzing(false);
+          setAnalysisResult({
+            hazard: 'Structural Road Damage / Severe Pothole',
+            confidence: 98.4,
+            severity: 'High',
+            riskScore: 84,
+            action: 'Dispatched to Public Works Dept'
+          });
+        }, 1500);
+      };
+
+      return (
+        <div class="min-h-screen">
+          {/* NAVIGATION BAR */}
+          <nav class="sticky top-0 z-50 backdrop-blur-md bg-[#0B0F19]/80 border-b border-slate-800/80 px-6 py-4">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="p-2 bg-gradient-to-tr from-[#6366F1] to-[#00F2FE] rounded-xl shadow-lg shadow-[#00F2FE]/20">
+                  <i data-lucide="shield" class="w-6 h-6 text-black"></i>
+                </div>
+                <span class="text-xl font-bold tracking-wider text-white">
+                  AstraGuard <span class="text-[#00F2FE]">AI</span>
+                </span>
+              </div>
+
+              <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-400">
+                <a href="#home" class="hover:text-[#00F2FE] transition-colors">Home</a>
+                <a href="#features" class="hover:text-[#00F2FE] transition-colors">Features</a>
+                <a href="#how-it-works" class="hover:text-[#00F2FE] transition-colors">How It Works</a>
+                <a href="#architecture" class="hover:text-[#00F2FE] transition-colors">Architecture</a>
+                <a href="#map" class="hover:text-[#00F2FE] transition-colors">Live Map</a>
+              </div>
+
+              <div class="flex items-center space-x-4">
+                <button 
+                  onClick={() => setIsModalOpen(true)}
+                  class="px-4 py-2 text-sm font-semibold rounded-lg bg-[#00F2FE] text-slate-950 hover:bg-[#00F2FE]/80 transition-all shadow-md shadow-[#00F2FE]/20 flex items-center space-x-2"
+                >
+                  <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                  <span>Report Hazard</span>
+                </button>
+                <button class="px-4 py-2 text-sm font-semibold rounded-lg border border-slate-700 bg-slate-900/50 hover:bg-slate-800 transition-all text-slate-300 flex items-center space-x-2">
+                  <i data-lucide="lock" class="w-4 h-4 text-[#6366F1]"></i>
+                  <span>Authority Login</span>
+                </button>
+              </div>
+            </div>
+          </nav>
+
+          {/* HERO SECTION */}
+          <section id="home" class="relative pt-20 pb-16 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+              <div class="space-y-6">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[#00F2FE] text-xs font-semibold">
+                  <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                  <span>Next-Gen Community Hazard Intelligence</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                  Building Safer Communities with <span class="bg-gradient-to-r from-[#00F2FE] via-[#6366F1] to-[#10B981] bg-clip-text text-transparent">AI Intelligence</span>
+                </h1>
+                <p class="text-lg text-slate-400 max-w-xl">
+                  Detect. Report. Protect. Real-time hazard intelligence platform giving citizens and smart cities the speed to resolve urban dangers instantly.
+                </p>
+
+                <div class="flex flex-wrap gap-4 pt-2">
+                  <button 
+                    onClick={() => setIsModalOpen(true)}
+                    class="px-6 py-3 rounded-xl bg-gradient-to-r from-[#00F2FE] to-[#6366F1] text-slate-950 font-bold hover:opacity-90 transition-all shadow-lg shadow-[#00F2FE]/20 flex items-center space-x-2"
+                  >
+                    <span>Report a Hazard</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                  </button>
+                  <a 
+                    href="#map" 
+                    class="px-6 py-3 rounded-xl border border-slate-700 bg-slate-900/60 hover:bg-slate-800 transition-all font-semibold text-slate-200 flex items-center space-x-2"
+                  >
+                    <i data-lucide="globe" class="w-5 h-5 text-[#00F2FE]"></i>
+                    <span>View Live Map</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Risk Score Widget */}
+              <div class="relative p-6 rounded-2xl bg-slate-900/60 border border-slate-800 backdrop-blur-xl shadow-2xl space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-3 h-3 rounded-full bg-[#10B981] animate-ping"></div>
+                    <span class="text-sm font-semibold text-slate-300">Live City Monitoring: Metro Zone A</span>
+                  </div>
+                  <span class="text-xs bg-slate-800 text-slate-400 px-2.5 py-1 rounded-md">Updated Now</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                    <p class="text-xs text-slate-400 font-medium">Community Risk Score</p>
+                    <div class="flex items-baseline space-x-2 mt-2">
+                      <span class="text-3xl font-extrabold text-[#00F2FE]">78</span>
+                      <span class="text-xs text-red-400 font-semibold">↑ Elevating</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-1.5 rounded-full mt-3 overflow-hidden">
+                      <div class="bg-gradient-to-r from-[#10B981] via-yellow-400 to-red-500 h-full w-[78%]"></div>
+                    </div>
+                  </div>
+
+                  <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                    <p class="text-xs text-slate-400 font-medium">Active Incidents</p>
+                    <span class="text-3xl font-extrabold text-white mt-2 block">14</span>
+                    <p class="text-xs text-slate-500 mt-1">4 high priority active</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* FEATURE TAB SECTION */}
+          <section id="features" class="py-20 px-6 border-t border-slate-800/60">
+            <div class="max-w-7xl mx-auto space-y-12">
+              <div class="text-center space-y-4">
+                <h2 class="text-3xl font-bold text-white">Platform Capabilities</h2>
+              </div>
+
+              <div class="flex justify-center border-b border-slate-800">
+                <div class="flex space-x-4">
+                  <button 
+                    onClick={() => setActiveTab('citizen')}
+                    class={`pb-4 px-4 font-semibold text-sm transition-all border-b-2 ${activeTab === 'citizen' ? 'border-[#00F2FE] text-[#00F2FE]' : 'border-transparent text-slate-400'}`}
+                  >
+                    Citizen Experience
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('ai')}
+                    class={`pb-4 px-4 font-semibold text-sm transition-all border-b-2 ${activeTab === 'ai' ? 'border-[#6366F1] text-[#6366F1]' : 'border-transparent text-slate-400'}`}
+                  >
+                    AI Engine Core
+                  </button>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-3 gap-6">
+                {activeTab === 'citizen' ? (
+                  <>
+                    <div class="p-6 rounded-xl bg-slate-900/40 border border-slate-800 space-y-3">
+                      <i data-lucide="map-pin" class="w-8 h-8 text-[#00F2FE]"></i>
+                      <h4 class="font-bold text-white">Automated GPS Tracking</h4>
+                      <p class="text-sm text-slate-400">Instant precise location tagging for accurate municipal dispatches.</p>
+                    </div>
+                    <div class="p-6 rounded-xl bg-slate-900/40 border border-slate-800 space-y-3">
+                      <i data-lucide="upload" class="w-8 h-8 text-[#00F2FE]"></i>
+                      <h4 class="font-bold text-white">One-Tap Photo Upload</h4>
+                      <p class="text-sm text-slate-400">Simplified visual submission interface optimized for low connectivity.</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div class="p-6 rounded-xl bg-slate-900/40 border border-slate-800 space-y-3">
+                      <i data-lucide="eye" class="w-8 h-8 text-[#6366F1]"></i>
+                      <h4 class="font-bold text-white">Vision AI Detection</h4>
+                      <p class="text-sm text-slate-400">Detects structural, electrical, and environmental hazards automatically.</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </section>
+
+          {/* REPORTING MODAL */}
+          {isModalOpen && (
+            <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+              <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-6 relative shadow-2xl">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                  <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                    <i data-lucide="alert-triangle" class="w-5 h-5 text-[#00F2FE]"></i>
+                    <span>Submit Urban Hazard Report</span>
+                  </h3>
+                  <button onClick={() => setIsModalOpen(false)} class="text-slate-400 hover:text-white text-sm">✕</button>
+                </div>
+
+                <div class="space-y-4">
+                  <div class="border-2 border-dashed border-slate-700 rounded-xl p-8 text-center bg-slate-950/50">
+                    <i data-lucide="upload" class="w-8 h-8 text-slate-500 mx-auto mb-2"></i>
+                    <p class="text-sm font-medium text-slate-300">Drag & drop hazard image here</p>
+                  </div>
+
+                  <button 
+                    onClick={handleSimulateAI}
+                    disabled={analyzing}
+                    class="w-full py-3 rounded-xl bg-gradient-to-r from-[#00F2FE] to-[#6366F1] text-slate-950 font-bold hover:opacity-90 flex items-center justify-center space-x-2"
+                  >
+                    {analyzing ? <span>Analyzing with Vision AI...</span> : <span>Simulate AI Analysis</span>}
+                  </button>
+
+                  {analysisResult && (
+                    <div class="p-4 rounded-xl bg-slate-950 border border-[#00F2FE]/30 space-y-2 text-xs">
+                      <div class="flex justify-between text-slate-300">
+                        <span>Detected Hazard:</span>
+                        <strong class="text-white">{analysisResult.hazard}</strong>
+                      </div>
+                      <div class="flex justify-between text-slate-300">
+                        <span>AI Confidence:</span>
+                        <strong class="text-[#00F2FE]">{analysisResult.confidence}%</strong>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<AstraGuardApp />);
+  </script>
+</body>
+</html>
